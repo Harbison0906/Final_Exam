@@ -7,7 +7,7 @@ import db from '../db';
 passport.use(new BearerStrategy.Strategy( async (token, done) => {
   try {
     let payload = await validToken(token);
-    let [user] = await db.user.find('id', payload.userid);
+    let [user] = await db.users.find('id', payload.userid);
     if (user) {
       delete user.password;
       done(null, user); //creates req.user
