@@ -14,7 +14,7 @@ passport.use(new LocalStrategy.Strategy({
   async (email, password, done) => {
     try {
 
-      let [user] = await db.user.find('email', email);
+      let [user] = await db.users.find('email', email);
       if (user && comparePassword(password, user.password)) {
         delete user.password;
         done(null, user);
