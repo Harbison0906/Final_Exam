@@ -32,13 +32,23 @@ export default class Admin extends React.Component<AdminProps, AdminState> {
     }
   }
 
-  editBook = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  editBook = (e: React.MouseEvent<HTMLButtonElement>) => {
     const details = { title: this.state.title, author: this.state.author, categoryid: this.state.categoryid, price: this.state.price }
     json(`/api/books/${this.props.match.params.bookid}`, 'PUT', details)
     .then(details => {
       console.log(details);
       this.props.history.push(`/details/${this.props.match.params.bookid}`);
     })
+  }
+
+  deleteBook = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    json(`/api/books/${this.props.match.params.bookid}`, 'DELETE')
+    .then(details => {
+      console.log(details);
+      this.props.history.push('/');
+    })
+
   }
 
 
@@ -71,6 +81,7 @@ export default class Admin extends React.Component<AdminProps, AdminState> {
               />
             </form>
             <button onClick={this.editBook}>Edit Book</button>
+            <button onClick={this.deleteBook}>Delete Book</button>
           </div>
         </section>
       </main>
